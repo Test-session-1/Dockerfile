@@ -1,0 +1,22 @@
+version: 2
+
+services:
+  scheduler:
+    image: daskdev/dask:latest
+    command: dask-scheduler --host 0.0.0.0 --port 8786
+    ports:
+      - "8786:8786"
+    environment:
+      - EXTRA_PIP_PACKAGES=distributed
+      - EXTRA_CONDA_PACKAGES=dask-ml
+    volumes:
+      - .:/app
+
+  worker:
+    image: daskdev/dask:latest
+    command: dask-worker scheduler:8786 --memory-limit 2GB --nprocs 2 --nthreads 2
+    environment:
+      - EXTRA_PIP_PACKAGES=distributed
+      - EXTRA_CONDA_PACKAGES=dask-ml
+    volumes:
+      - .:/app

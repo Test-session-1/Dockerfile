@@ -10,9 +10,7 @@ COPY jupyter_notebook_config.py /app/
 COPY dask.yaml /app/
 
 # Install necessary packages
-RUN pip install apache-airflow[postgres, celery, rabbitmq]
-RUN pip install jupyterlab
-RUN pip install dask dask-ml
+RUN pip install apache-airflow[all] jupyterlab dask
 
 # Expose the Airflow and JupyterLab ports
 EXPOSE 8080 8888
